@@ -1,14 +1,281 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Simple Website</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Login / Register</title>
+    <style>
+        :root{
+            --bg:#f3f6fb; --card:#fff; --accent:#2563eb; --muted:#6b7280;
+        }
+        *{box-sizing:border-box}
+        body{
+            margin:0;
+            font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background:linear-gradient(180deg,#e6f0ff 0%, #f8fbff 100%);
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:24px;
+        }
+        .card{
+            width:100%;
+            max-width:420px;
+            background:var(--card);
+            border-radius:12px;
+            box-shadow:0 10px 30px rgba(2,6,23,0.08);
+            padding:28px;
+        }
+        h1{margin:0 0 8px;font-size:20px}
+        p.lead{margin:0 0 20px;color:var(--muted);font-size:13px}
+        .tabs{display:flex;gap:8px;margin-bottom:18px}
+        .tab{
+            flex:1;
+            padding:10px 12px;
+            text-align:center;
+            border-radius:8px;
+            cursor:pointer;
+            user-select:none;
+            color:var(--muted);
+            background:#f8fafc;
+            font-weight:600;
+        }
+        .tab.active{
+            background:linear-gradient(90deg,var(--accent),#4f46e5);
+            color:#fff;
+        }
+        form{display:grid;gap:12px}
+        label{font-size:13px;color:var(--muted)}
+        input[type="text"], input[type="email"], input[type="password"]{
+            width:100%;
+            padding:10px 12px;
+            border-radius:8px;
+            border:1px solid #e6eefc;
+            background:#fbfdff;
+            font-size:14px;
+            outline:none;
+        }
+        .row{display:flex;gap:8px;align-items:center}
+        .btn{
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            justify-content:center;
+            width:100%;
+            padding:10px 12px;
+            border-radius:8px;
+            border:0;
+            color:#fff;
+            background:var(--accent);
+            cursor:pointer;
+            font-weight:600;
+        }
+        .muted{color:var(--muted);font-size:13px}
+        .helper{font-size:13px;color:#dc2626}
+        .inline{
+            display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)
+        }
+        .small{font-size:12px;color:var(--muted)}
+        .show-pass{background:transparent;border:0;color:var(--accent);cursor:pointer;font-size:12px;padding:6px}
+        .message{padding:8px;border-radius:8px;font-size:13px}
+        .success{background:#ecfdf5;color:#065f46}
+        .error{background:#fff1f2;color:#991b1b}
+        .note{margin-top:8px;font-size:12px;color:var(--muted)}
+    </style>
 </head>
 <body>
-  <h1>Hello, GitHub!</h1>
-  <p>This is my first website pushed to GitHub!</p>
-  <script src="script.js"></script>
+    <main class="card" role="main">
+        <div class="tabs" role="tablist" aria-label="Auth tabs">
+            <div id="tab-login" class="tab active" role="tab" aria-selected="true">Log in</div>
+            <div id="tab-register" class="tab" role="tab" aria-selected="false">Register</div>
+        </div>
+
+        <section id="login-section" aria-hidden="false">
+            <h1>Welcome back</h1>
+            <p class="lead">Log in with your email and password.</p>
+
+            <form id="login-form" autocomplete="off" onsubmit="return false;">
+                <div>
+                    <label for="login-email">Email</label>
+                    <input id="login-email" type="email" required />
+                </div>
+                <div>
+                    <label for="login-password">Password</label>
+                    <div style="display:flex;align-items:center;gap:8px">
+                        <input id="login-password" type="password" required />
+                        <button class="show-pass" type="button" data-toggle="login-password">Show</button>
+                    </div>
+                </div>
+
+                <div class="inline">
+                    <label style="display:flex;gap:8px;align-items:center">
+                        <input id="remember" type="checkbox" /> <span class="small">Remember me</span>
+                    </label>
+                    <button id="btn-login" class="btn" type="submit">Sign in</button>
+                </div>
+
+                <div id="login-message" role="status" aria-live="polite"></div>
+                <p class="note">This demo stores registered users in your browser only (localStorage).</p>
+            </form>
+        </section>
+
+        <section id="register-section" aria-hidden="true" style="display:none">
+            <h1>Create account</h1>
+            <p class="lead">Register with email and a secure password.</p>
+
+            <form id="register-form" autocomplete="off" onsubmit="return false;">
+                <div>
+                    <label for="reg-email">Email</label>
+                    <input id="reg-email" type="email" required />
+                </div>
+                <div>
+                    <label for="reg-password">Password</label>
+                    <div style="display:flex;align-items:center;gap:8px">
+                        <input id="reg-password" type="password" required />
+                        <button class="show-pass" type="button" data-toggle="reg-password">Show</button>
+                    </div>
+                </div>
+                <div>
+                    <label for="reg-password-confirm">Confirm password</label>
+                    <input id="reg-password-confirm" type="password" required />
+                </div>
+
+                <div style="display:flex;gap:8px">
+                    <button id="btn-register" class="btn" type="submit">Register</button>
+                </div>
+
+                <div id="register-message" role="status" aria-live="polite"></div>
+                <p class="note">Passwords are hashed with SHA-256 before being saved locally.</p>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // Minimal auth demo using localStorage. Do NOT use for production.
+        const qs = sel => document.querySelector(sel);
+        const tabLogin = qs('#tab-login'), tabRegister = qs('#tab-register');
+        const loginSection = qs('#login-section'), registerSection = qs('#register-section');
+        const loginForm = qs('#login-form'), registerForm = qs('#register-form');
+        const loginMsg = qs('#login-message'), registerMsg = qs('#register-message');
+
+        function showTab(tab){
+            if(tab === 'login'){
+                tabLogin.classList.add('active'); tabRegister.classList.remove('active');
+                loginSection.style.display = ''; registerSection.style.display = 'none';
+                loginSection.setAttribute('aria-hidden','false'); registerSection.setAttribute('aria-hidden','true');
+            } else {
+                tabRegister.classList.add('active'); tabLogin.classList.remove('active');
+                registerSection.style.display = ''; loginSection.style.display = 'none';
+                registerSection.setAttribute('aria-hidden','false'); loginSection.setAttribute('aria-hidden','true');
+            }
+            clearMessages();
+        }
+        tabLogin.addEventListener('click', ()=> showTab('login'));
+        tabRegister.addEventListener('click', ()=> showTab('register'));
+
+        // Show/hide password buttons
+        document.querySelectorAll('.show-pass').forEach(btn=>{
+            btn.addEventListener('click', ()=> {
+                const id = btn.dataset.toggle;
+                const input = qs('#' + id);
+                if(!input) return;
+                input.type = input.type === 'password' ? 'text' : 'password';
+                btn.textContent = input.type === 'password' ? 'Show' : 'Hide';
+            })
+        });
+
+        function clearMessages(){
+            loginMsg.textContent = ''; loginMsg.className = '';
+            registerMsg.textContent = ''; registerMsg.className = '';
+        }
+
+        // Helper: SHA-256 hash of string -> hex
+        async function sha256hex(text){
+            const enc = new TextEncoder();
+            const data = enc.encode(text);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const bytes = new Uint8Array(hashBuffer);
+            return Array.from(bytes).map(b=>b.toString(16).padStart(2,'0')).join('');
+        }
+
+        function loadUsers(){
+            try{
+                const raw = localStorage.getItem('auth_demo_users') || '{}';
+                return JSON.parse(raw);
+            }catch(e){
+                return {};
+            }
+        }
+        function saveUsers(obj){
+            localStorage.setItem('auth_demo_users', JSON.stringify(obj));
+        }
+
+        // Register handler
+        registerForm.addEventListener('submit', async () => {
+            clearMessages();
+            const email = qs('#reg-email').value.trim().toLowerCase();
+            const pw = qs('#reg-password').value;
+            const pwc = qs('#reg-password-confirm').value;
+            if(!email || !pw || !pwc){
+                registerMsg.textContent = 'Please fill all fields.'; registerMsg.className = 'message error'; return;
+            }
+            if(pw.length < 6){
+                registerMsg.textContent = 'Password must be at least 6 characters.'; registerMsg.className = 'message error'; return;
+            }
+            if(pw !== pwc){
+                registerMsg.textContent = 'Passwords do not match.'; registerMsg.className = 'message error'; return;
+            }
+
+            const users = loadUsers();
+            if(users[email]){
+                registerMsg.textContent = 'An account with that email already exists.'; registerMsg.className = 'message error'; return;
+            }
+
+            const hashed = await sha256hex(pw);
+            users[email] = { password: hashed, created: Date.now() };
+            saveUsers(users);
+            registerMsg.textContent = 'Registration successful. You can now sign in.'; registerMsg.className = 'message success';
+            registerForm.reset();
+            // Switch to login
+            setTimeout(()=> showTab('login'), 800);
+        });
+
+        // Login handler
+        loginForm.addEventListener('submit', async () => {
+            clearMessages();
+            const email = qs('#login-email').value.trim().toLowerCase();
+            const pw = qs('#login-password').value;
+            if(!email || !pw){
+                loginMsg.textContent = 'Please enter email and password.'; loginMsg.className = 'message error'; return;
+            }
+            const users = loadUsers();
+            if(!users[email]){
+                loginMsg.textContent = 'No account found for that email.'; loginMsg.className = 'message error'; return;
+            }
+            const hashed = await sha256hex(pw);
+            if(hashed !== users[email].password){
+                loginMsg.textContent = 'Incorrect password.'; loginMsg.className = 'message error'; return;
+            }
+
+            // Simple "session" stored in sessionStorage or localStorage if remember checked
+            if(qs('#remember').checked){
+                localStorage.setItem('auth_demo_session', JSON.stringify({ email, ts: Date.now() }));
+            } else {
+                sessionStorage.setItem('auth_demo_session', JSON.stringify({ email, ts: Date.now() }));
+            }
+
+            loginMsg.textContent = 'Signed in successfully.'; loginMsg.className = 'message success';
+            loginForm.reset();
+        });
+
+        // If already signed in, display quick message
+        (function init(){
+            const session = JSON.parse(sessionStorage.getItem('auth_demo_session') || localStorage.getItem('auth_demo_session') || 'null');
+            if(session && session.email){
+                loginMsg.textContent = 'Signed in as ' + session.email + '.'; loginMsg.className = 'message success';
+            }
+        })();
+    </script>
 </body>
 </html>
