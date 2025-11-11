@@ -28,7 +28,7 @@ localStorage.setItem("user", JSON.stringify(data.user));
 
 
 if (data.user.role === "admin") {
-window.location.href = "admin.html";
+window.location.href = "../admin.html";
 }
 }
 });
