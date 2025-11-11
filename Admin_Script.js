@@ -161,28 +161,28 @@
             countEl.textContent = users.length + (users.length === 1 ? ' user' : ' users');
         }
 
-        // function populateForm(id){
-        //     const u = users.find(x=>x.id===id);
-        //     if(!u) return;
-        //     el('userId').value = u.id;
-        //     el('name').value = u.name;
-        //     el('email').value = u.email;
-        //     el('role').value = u.role;
-        //     el('approved').value = u.approved ? 'true' : 'false';
-        //     el('formTitle').textContent = 'Edit Client';
-        //     el('saveBtn').textContent = 'Save';
-        //     el('name').focus();
-        // }
+        function populateForm(id){
+            const u = users.find(x=>x.id===id);
+            if(!u) return;
+            el('userId').value = u.id;
+            el('name').value = u.name;
+            el('email').value = u.email;
+            el('role').value = u.role;
+            el('approved').value = u.approved ? 'true' : 'false';
+            el('formTitle').textContent = 'Edit Client';
+            el('saveBtn').textContent = 'Save';
+            el('name').focus();
+        }
 
-        // function resetForm(){
-        //     el('userId').value = '';
-        //     el('name').value = '';
-        //     el('email').value = '';
-        //     el('role').value = 'user';
-        //     el('approved').value = 'false';
-        //     el('formTitle').textContent = 'Add Client';
-        //     el('saveBtn').textContent = 'Add';
-        // }
+        function resetForm(){
+            el('userId').value = '';
+            el('name').value = '';
+            el('email').value = '';
+            el('role').value = 'user';
+            el('approved').value = 'false';
+            el('formTitle').textContent = 'Add Client';
+            el('saveBtn').textContent = 'Add';
+        }
 
         function toggleApprove(id){
             const u = users.find(x=>x.id===id);

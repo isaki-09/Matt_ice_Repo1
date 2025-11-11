@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="inline">
-                    <button id="btn-login" class="btn" type="submit">Sign in</button>
+                    <button  id="btn-login" class="btn"  type="submit">Sign in</button>
                 </div>
 
                     <div style="margin-top:8px">
@@ -53,13 +53,18 @@
                 <div id="login-message" role="status" aria-live="polite"></div>
                 <p class="note">This demo stores registered users in your browser only (localStorage).</p>
             </form>
+            <p id="msg"></p>
         </section>
 
         <section id="register-section" aria-hidden="true" style="display:none">
             <h1>Create account</h1>
             <p class="lead">Register with email and a secure password.</p>
 
-            <form id="register-form" autocomplete="off" onsubmit="return false;">
+            <form id="register-form" autocomplete="off" onsubmit="return true;">
+                <div>
+                    <label for="name">Name</label>
+                    <input id="name" type="text" required />
+                </div>
                 <div>
                     <label for="email">Email</label>
                     <input id="email" type="email" required />
@@ -86,11 +91,9 @@
         </section>
     </main>
 
-    <script type="module" src="frontend/register-admin.js"></script>
-    <script type="module" src="frontend/register-client.js"></script>
-    <script type="module" src="frontend/login.js"></script>
+    <script type="module" src="/frontend/login.js"></script>
     <script type="module" src="script.js"></script>
-</body>
+
 </html>
 </body>
 </html>

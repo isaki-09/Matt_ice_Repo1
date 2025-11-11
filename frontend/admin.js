@@ -1,6 +1,6 @@
 const API = "http://localhost:5000/api";
 const token = localStorage.getItem("token");
-if (!token) window.location.href = "login.html";
+if (!token) window.location.href = "../Index.html";
 
 
 async function loadClients() {
