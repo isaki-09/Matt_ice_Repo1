@@ -44,13 +44,16 @@
 
             <aside class="card">
                 <strong id="formTitle">Add Client</strong>
-                <form id="userForm" autocomplete="off">
-                    <input type="hidden" id="userId" />
+                <form id="userForm, clientRegForm" autocomplete="off">
+                    <input type="hidden" id="name" />
                     <label for="name">Full name</label>
                     <input id="name" type="text" required placeholder="Jane Doe" />
 
                     <label for="email">Email</label>
                     <input id="email" type="email" required placeholder="jane@example.com" />
+
+                    <label for="password">Password</label>
+                    <input id="password" type="password" required placeholder="Enter Password" />
 
                     <label for="role">Role</label>
                     <select id="role">
@@ -60,11 +63,6 @@
                         <option value="InfoTech">Information Technology</option>
                     </select>
 
-                    <label for="approved">Approved</label>
-                    <select id="approved">
-                        <option value="false">No</option>
-                        <option value="true">Yes</option>
-                    </select>
 
                     <div class="form-actions">
                         <button type="submit" class="primary" id="saveBtn">Add</button>
@@ -72,7 +70,7 @@
                         <button type="button" id="bulkDelete" style="margin-left:auto" title="Delete all unapproved"></scr>Delete Unapproved</button>
                     </div>
                 </form>     
-z
+                <p id="msg"></p>
                 <hr style="margin:12px 0" />
 
                 <div class="small">
@@ -82,7 +80,8 @@ z
         </div>
     </div>
 
-    <script type="module" src="frontend/admin.js"></script>
     <script type="module" src="Admin_Script.js"></script>
+    <script type="module" src="register-client"></script>
+
 </body>
 </html>

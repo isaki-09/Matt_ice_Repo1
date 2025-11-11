@@ -117,6 +117,7 @@ form label {
 
 input[type="text"],
 input[type="email"],
+input[type="password"],
 select,
 .search input {
     width: 100%;
