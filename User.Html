@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>User Account — Tasks monitoring</title>
+    <link rel="stylesheet" href="Admin_style.css">
+    <style>
+      /* Minimal modal styling */
+      #descriptionModal {
+        display:none;
+        position:fixed;
+        left:0;top:0;width:100%;height:100%;
+        background:rgba(0,0,0,0.5);
+        align-items:center;justify-content:center;
+      }
+      #descriptionModal .panel {
+        background:#fff;padding:16px;border-radius:6px;max-width:600px;width:90%;
+      }
+      #descriptionModal .close { float:right; cursor:pointer; }
+      .actions button { margin-right:6px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="search">
+                <input id="search" type="text" placeholder="Search by name or email" />
+                <button id="reset" title="Reset">Reset</button>
+            </div>
+        </header>
+
+        <div class="layout">
+            <section class="card">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                    <strong>Task List</strong>
+                    <div class="small" id="count">0 Task</div>
+                </div>
+                <div style="overflow:auto;max-height:520px">
+                    <table id="usersTable" aria-describedby="count">
+                        <thead>
+                            <tr>
+                                <th>Task</th>
+                                <th>Assigned</th>
+                                <th>Status</th>
+                                <th>Deadline</th>
+                                <th style="width:170px">Actions</th>
+                                
+                            </tr>
+                        </thead>
+
+                        <script>
+                        /* helper: format a date (from a date input or today) */
+                        function formatDateInput(value){
+                          if (!value) return new Date().toLocaleDateString();
+                          // value from <input type="date"> is yyyy-mm-dd
+                          const parts = value.split('-');
+                          if (parts.length === 3) {
+                            const d = new Date(parts[0], parts[1]-1, parts[2]);
+                            return d.toLocaleDateString();
+                          }
+                          return new Date(value).toLocaleDateString();
+                        }
+
+                        /* call this to get the display value for the deadline cell */
+                        function getDeadline(){
+                          const el = document.getElementById('deadline');
+                          return formatDateInput(el && el.value);
+                        }
+                        </script>
+
+                        <tbody id="usersTbody"></tbody>
+                    </table>
+                    <div id="empty" class="empty" style="display:none">No clients found. Add a new client using the form.</div>
+                </div>
+            </section>
+
+            <aside class="card">
+                <strong id="formTitle">Profile</strong>
+                <form id="userForm" autocomplete="off">
+                    <input type="hidden" id="userId" />
+                    <label for="name">Full name</label>
+                    <span id="name">Isaac Nicolas A. Canlas</span>
+
+                    <label for="email">Role</label>
+                    <span id="role">IT Support</span>
+
+                    <label for="taskName">Task Name</label>
+                    <input type="text" id="taskName" required placeholder="Enter task name" />
+
+                    <label for="taskDescription">Task Description</label>
+                    <input type="text" id="taskDescription" placeholder="Enter task description" />
+
+                    <label for="assignedTo">Assigned To</label>
+                    <input type="text" id="assignedTo" placeholder="Enter assignee name" />
+
+                    <label for="status">Status</label>
+                    <select id="status">
+                        <option value="pending">Pending</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+
+                    <label for="deadline">Deadline</label>
+                    <input type="date" id="deadline" />
+
+                    <button type="submit" id="submitTask">Create Task</button>
+                </form>
+
+                <hr style="margin:12px 0" />
+
+                <div class="small">
+                    Tip: Click "Edit" to populate the form. Use the eye icon to view description.
+                </div>
+            </aside>
+
+            <!-- Modal for viewing description -->
+            <div id="descriptionModal">
+              <div class="panel">
+                <span class="close" id="modalClose">✖</span>
+                <h3 id="modalTaskTitle"></h3>
+                <p id="modalDescription"></p>
+                <div><strong>Assigned:</strong> <span id="modalAssigned"></span></div>
+                <div><strong>Status:</strong> <span id="modalStatus"></span></div>
+                <div><strong>Deadline:</strong> <span id="modalDeadline"></span></div>
+              </div>
+            </div>
+
+            <script>
+                const form = document.getElementById('userForm');
+                const tbody = document.getElementById('usersTbody');
+                const countEl = document.getElementById('count');
+                const empty = document.getElementById('empty');
+
+                function updateCount(){
+                  countEl.innerText = `${tbody.rows.length} Task${tbody.rows.length !== 1 ? 's' : ''}`;
+                  empty.style.display = tbody.rows.length ? 'none' : '';
+                }
+
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    const taskName = document.getElementById('taskName').value.trim();
+                    const taskDescription = document.getElementById('taskDescription').value.trim();
+                    const assignedTo = document.getElementById('assignedTo').value.trim();
+                    const status = document.getElementById('status').value;
+                    const deadlineDisplay = getDeadline();
+                    const deadlineInputValue = document.getElementById('deadline').value; // store raw date too
+
+                    const newRow = tbody.insertRow();
+                    newRow.dataset.description = taskDescription;
+                    newRow.dataset.deadline = deadlineInputValue; // raw yyyy-mm-dd
+                    newRow.innerHTML = `
+                        <td class="taskName">${escapeHtml(taskName)}</td>
+                        <td class="assigned">${escapeHtml(assignedTo)}</td>
+                        <td class="status">${escapeHtml(status)}</td>
+                        <td class="deadline">${escapeHtml(deadlineDisplay)}</td>
+                        <td class="actions" style="display:flex;gap:6px;align-items:center;">
+                            <button type="button" class="view" title="View description">👁</button>
+                            <button type="button" class="edit" title="Edit">Edit</button>
+                            <button type="button" class="delete" title="Delete">Delete</button>
+                        </td>
+                        
+                    `;
+
+                    updateCount();
+                    form.reset();
+                });
+
+                // simple HTML-escape to avoid injecting markup from inputs
+                function escapeHtml(s){
+                  return (s || '').replace(/[&<>"']/g, function(m){
+                    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];
+                  });
+                }
+
+                // Event delegation for view/edit/delete
+                tbody.addEventListener('click', function(e){
+                  const btn = e.target.closest('button');
+                  if (!btn) return;
+                  const row = btn.closest('tr');
+                  if (!row) return;
+
+                  if (btn.classList.contains('view')) {
+                    // show modal with description
+                    document.getElementById('modalTaskTitle').innerText = row.querySelector('.taskName').innerText;
+                    document.getElementById('modalDescription').innerText = row.dataset.description || '(No description)';
+                    document.getElementById('modalAssigned').innerText = row.querySelector('.assigned').innerText;
+                    document.getElementById('modalStatus').innerText = row.querySelector('.status').innerText;
+                    const rawDate = row.dataset.deadline;
+                    document.getElementById('modalDeadline').innerText = rawDate ? formatDateInput(rawDate) : new Date().toLocaleDateString();
+                    document.getElementById('descriptionModal').style.display = 'flex';
+                  }
+
+                  if (btn.classList.contains('edit')) {
+                    // populate form with row data for editing (simple replace: we'll remove the row and let user submit to re-create)
+                    document.getElementById('taskName').value = row.querySelector('.taskName').innerText;
+                    document.getElementById('taskDescription').value = row.dataset.description || '';
+                    document.getElementById('assignedTo').value = row.querySelector('.assigned').innerText;
+                    document.getElementById('status').value = row.querySelector('.status').innerText;
+                    document.getElementById('deadline').value = row.dataset.deadline || '';
+                    // remove row so submit will create updated one
+                    row.remove();
+                    updateCount();
+                  }
+
+                  if (btn.classList.contains('delete')) {
+                    row.remove();
+                    updateCount();
+                  }
+                });
+
+                // modal close
+                document.getElementById('modalClose').addEventListener('click', function(){
+                  document.getElementById('descriptionModal').style.display = 'none';
+                });
+                // click outside panel closes modal
+                document.getElementById('descriptionModal').addEventListener('click', function(e){
+                  if (e.target === this) this.style.display = 'none';
+                });
+
+                // initial update
+                updateCount();
+            </script>
+        </div>
+    </div>
+
+</body>
+</html>

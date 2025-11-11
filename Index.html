@@ -22,29 +22,33 @@
             <div id="tab-register" class="tab" role="tab" aria-selected="false">Register</div>
         </div>
 
-        <section id="login-section" aria-hidden="false">
+        <section id="loginForm" aria-hidden="false">
             <h1>Welcome back</h1>
             <p class="lead">Log in with your email and password.</p>
 
             <form id="login-form" autocomplete="off" onsubmit="return false;">
                 <div>
-                    <label for="login-email">Email</label>
-                    <input id="login-email" type="email" required />
+                    <label for="email">Email</label>
+                    <input id="email" type="email" required />
                 </div>
                 <div>
-                    <label for="login-password">Password</label>
+                    <label for="password">Password</label>
                     <div style="display:flex;align-items:center;gap:8px">
-                        <input id="login-password" type="password" required />
+                        <input id="password" type="password" required />
                         <button class="show-pass" type="button" data-toggle="login-password">Show</button>
                     </div>
                 </div>
 
                 <div class="inline">
-                    <label style="display:flex;gap:8px;align-items:center">
-                        <input id="remember" type="checkbox" /> <span class="small">Remember me</span>
-                    </label>
                     <button id="btn-login" class="btn" type="submit">Sign in</button>
                 </div>
+
+                    <div style="margin-top:8px">
+                        <label style="display:flex;gap:8px;align-items:center">
+                            <input id="remember" type="checkbox" /> <span class="small">Remember me</span>
+                        </label>
+                    </div>
+
 
                 <div id="login-message" role="status" aria-live="polite"></div>
                 <p class="note">This demo stores registered users in your browser only (localStorage).</p>
@@ -82,6 +86,7 @@
         </section>
     </main>
 
+    <script type="module" src="frontend/admin.js"></script>
     <script type="module" src="script.js"></script>
 </body>
 </html>
