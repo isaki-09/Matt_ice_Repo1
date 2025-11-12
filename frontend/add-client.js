@@ -53,7 +53,6 @@ async function loadUsers() {
     });
   } catch (err) {
     console.error("Error loading users:", err);
-    msg.textContent = "Error loading users.";
   }
 }
 
@@ -65,6 +64,12 @@ form.addEventListener("submit", async (e) => {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
   const role = document.getElementById("role").value;
+
+  if (!name || !email || !password || !role) {
+    msg.textContent = "Please fill in all fields.";
+    msg.style.color = "red";
+    return;
+  }
 
   try {
     const res = await fetch(`${API}/admin/users`, {
