@@ -1,35 +1,87 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Admin Dashboard</title>
-<link rel="stylesheet" href="styles.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Admin — Manage Clients</title>
+      <link rel="stylesheet" href="Admin_style.css">
 </head>
 <body>
-<div class="container">
-<h2>Admin Dashboard</h2>
-<button onclick="logout()">Logout</button>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Admin: Client User Management</h1>
+                <div class="small">Approve, add, update or delete client users</div>
+            </div>
+            <div class="search">
+                <input id="search" type="text" placeholder="Search by name or email" />
+                <button id="reset" title="Reset">Reset</button>
+            </div>
+        </header>
+
+        <div class="layout">
+            <section class="card">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                    <strong>Clients</strong>
+                    <div class="small" id="count">0 users</div>
+                </div>
+                <div style="overflow:auto;max-height:520px">
+                    <table id="usersTable" aria-describedby="count">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th style="width:170px">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTbody"></tbody>
+                    </table>
+                    <div id="empty" class="empty" style="display:none">No clients found. Add a new client using the form.</div>
+                </div>
+            </section>
+
+            <aside class="card">
+                <strong id="formTitle">Add Client</strong>
+                <form id="userForm, clientRegForm" autocomplete="off">
+                    <input type="hidden" id="name" />
+                    <label for="name">Full name</label>
+                    <input id="name" type="text" required placeholder="Jane Doe" />
+
+                    <label for="email">Email</label>
+                    <input id="email" type="email" required placeholder="jane@example.com" />
+
+                    <label for="password">Password</label>
+                    <input id="password" type="password" required placeholder="Enter Password" />
+
+                    <label for="role">Role</label>
+                    <select id="role">
+                        <option value="HumanResources">Human Resources</option>
+                        <option value="Regulatory">Regulatory</option>
+                        <option value="AdminGen">Admin. General Services</option>
+                        <option value="InfoTech">Information Technology</option>
+                    </select>
 
 
-<h3>Clients</h3>
-<button onclick="window.location.href='add-client.html'">Add Client</button>
+                    <div class="form-actions">
+                        <button type="submit" class="primary" id="saveBtn">Add</button>
+                        <button type="button" id="cancelBtn">Clear</button>
+                        <button type="button" id="bulkDelete" style="margin-left:auto" title="Delete all unapproved"></scr>Delete Unapproved</button>
+                    </div>
+                </form>     
+                <p id="msg"></p>
+                <hr style="margin:12px 0" />
 
+                <div class="small">
+                    Tip: Click "Edit" to populate the form. Approved users show a green badge. Use search to filter.
+                </div>
+            </aside>
+        </div>
+    </div>
 
-<table id="clientTable">
-<thead>
-<tr>
-<th>Name</th>
-<th>Email</th>
-<th>Approved</th>
-<th>Actions</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
-</div>
-
-
-<script src="admin.js"></script>
+    
+    <script type="module" src="add-client.html"></script>
+    <script type="module" src="Admin_Script.js"></script>
 </body>
 </html>

@@ -141,7 +141,7 @@ loginForm.addEventListener('submit', async (e) => {
             loginMsg.textContent = 'Signed in via API.'; loginMsg.className = 'message success';
 
             if(data.user.role === "admin"){
-                window.location.href = "../admin.html";
+                window.location.href = "admin.html";
             }
         }
     } catch(err){

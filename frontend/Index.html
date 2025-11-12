@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login / Register</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="card" role="main">
+    <div class="tabs" role="tablist" aria-label="Auth tabs">
+      <div id="tab-login" class="tab active" role="tab" aria-selected="true">Log in</div>
+      <div id="tab-register" class="tab" role="tab" aria-selected="false">Register</div>
+    </div>
+
+    <!-- LOGIN SECTION -->
+    <section id="login-section" aria-hidden="false">
+      <h1>Welcome back</h1>
+      <p class="lead">Log in with your email and password.</p>
+
+      <form id="login-form" autocomplete="off">
+        <div>
+          <label for="login-email">Email</label>
+          <input id="login-email" type="email" required />
+        </div>
+        <div>
+          <label for="login-password">Password</label>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input id="login-password" type="password" required />
+            <button class="show-pass" type="button" data-toggle="login-password">Show</button>
+          </div>
+        </div>
+
+        <div class="inline">
+          <button id="btn-login" class="btn" type="submit">Sign in</button>
+        </div>
+
+        <div style="margin-top:8px">
+          <label style="display:flex;gap:8px;align-items:center">
+            <input id="remember" type="checkbox" /> 
+            <span class="small">Remember me</span>
+          </label>
+        </div>
+
+        <div id="login-message" role="status" aria-live="polite"></div>
+        <p class="note">This demo stores registered users in your browser only (localStorage).</p>
+      </form>
+    </section>
+
+    <!-- REGISTER SECTION -->
+    <section id="register-section" aria-hidden="true" style="display:none">
+      <h1>Create account</h1>
+      <p class="lead">Register with email and a secure password.</p>
+
+      <form id="register-form" autocomplete="off">
+        <div>
+          <label for="reg-name">Name</label>
+          <input id="reg-name" type="text" required />
+        </div>
+        <div>
+          <label for="reg-email">Email</label>
+          <input id="reg-email" type="email" required />
+        </div>
+        <div>
+          <label for="reg-password">Password</label>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input id="reg-password" type="password" required />
+            <button class="show-pass" type="button" data-toggle="reg-password">Show</button>
+          </div>
+        </div>
+        <div>
+          <label for="reg-password-confirm">Confirm password</label>
+          <input id="reg-password-confirm" type="password" required />
+        </div>
+
+        <div style="display:flex;gap:8px">
+          <button id="btn-register" class="btn" type="submit">Register</button>
+        </div>
+
+        <div id="register-message" role="status" aria-live="polite"></div>
+        <p class="note">Passwords are hashed with SHA-256 before being saved locally.</p>
+      </form>
+    </section>
+  </main>
+
+  <script type="module" src="login.js"></script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
